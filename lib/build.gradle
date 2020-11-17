@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     // Use the latest Groovy version for building this library
-    implementation 'org.codehaus.groovy:groovy-all:3.0.6'
+    implementation("org.codehaus.groovy:groovy-all:3.0.6")
 	implementation("org.codehaus.groovy:groovy-xml:3.0.6")
 	implementation("com.google.code.gson:gson:2.8.6")
 	
