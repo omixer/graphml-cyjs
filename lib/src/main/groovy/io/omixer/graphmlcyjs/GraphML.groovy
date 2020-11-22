@@ -17,9 +17,10 @@ import io.omixer.graphmlcyjs.cyjs.Graph
  */
 class GraphML {
 
-    private Node root
-    private Graph graph
-    private Gson gsonSerializer
+    Node root
+    File svgDirectory
+    Graph graph
+    Gson gsonSerializer
 
     GraphML() {
         gsonSerializer = new Gson()
@@ -48,7 +49,8 @@ class GraphML {
             node.data = it.data.collectEntries { data ->
                 [(keys[data.@key]): data.text()]
             }
-            node.data["id"] = it.@id
+            // add a link to the node SVG image
+            node.data["svg"] = new File(svgDirectory, node.data["label"] + ".svg").getAbsolutePath()
             node
         }
 
@@ -64,7 +66,6 @@ class GraphML {
             edge.data["target"] = it.@target
             edge
         }
-
         this
     }
 

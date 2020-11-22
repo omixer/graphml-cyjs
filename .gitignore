@@ -13,3 +13,4 @@ lib/.settings/org.eclipse.buildship.core.prefs
 lib/.settings/org.eclipse.jdt.core.prefs
 lib/.settings/org.eclipse.jdt.groovy.core.prefs
 /.idea
+/local.properties

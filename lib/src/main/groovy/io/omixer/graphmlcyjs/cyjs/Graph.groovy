@@ -6,14 +6,14 @@ import com.google.gson.annotations.SerializedName
 class Graph {
     @SerializedName("format_version")
     @Expose
-    private String formatVersion
+    String formatVersion
     @SerializedName("generated_by")
     @Expose
-    private String generatedBy
+    String generatedBy
     @SerializedName("target_cytoscapejs_version")
     @Expose
-    private String targetCytoscapejsVersion
+    String targetCytoscapejsVersion
     @SerializedName("elements")
     @Expose
-    private Elements elements
+    Elements elements
 }

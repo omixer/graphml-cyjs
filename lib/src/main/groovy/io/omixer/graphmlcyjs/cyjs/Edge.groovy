@@ -7,5 +7,5 @@ class Edge {
 
 	@SerializedName("data")
 	@Expose
-	public Map<String, String> data
+	Map<String, String> data
 }
