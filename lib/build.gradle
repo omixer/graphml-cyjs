@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.omixer"
-version = '0.0.2'
+version = '0.0.3'
 
 repositories {
     // Use JCenter for resolving dependencies.
@@ -53,6 +53,8 @@ bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
     publications = ['binary']
+    publish = true
+    override = true
     pkg {
         repo = 'omixer'
         name = 'graphml-cyjs'
