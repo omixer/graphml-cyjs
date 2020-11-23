@@ -53,7 +53,6 @@ class GraphML {
             node.data["id"] = it.@id
             // add a link to the node SVG image
             node.data["svg"] = svgMapping[node.data["label"]]
-            println node
             node
         }
 
