@@ -1,7 +1,10 @@
 package io.omixer.graphmlcyjs
 
 import io.omixer.graphmlcyjs.cyjs.Node
+import io.omixer.graphmlcyjs.svg.Svg
 import spock.lang.Specification
+
+import java.awt.Dimension
 
 class GraphMLSpec extends Specification {
 
@@ -9,7 +12,19 @@ class GraphMLSpec extends Specification {
 
     def setup() {
         gml = new GraphML()
-        Map<String, String> svgMapping = (1..6).collectEntries {[(it.toString()): "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/${it}.svg".toString()]}
+        Map<String, Svg> svgMapping = (1..6).collectEntries {
+
+            // compile local path
+            String svgPath = "src/test/resources/images/${it}.svg".toString()
+            // compile web path
+            String webPath = "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/${it}.svg".toString()
+            // get dimensions from local path
+            Dimension dimension = Svg.dimensionFromFile(svgPath)
+            // create an Svg object
+            Svg svg = new Svg(path: webPath, dimension: dimension)
+            // map it
+            [(it.toString()): svg]
+        }
         gml.svgMapping = svgMapping
         gml.parse(new File("src/test/resources/graph.graphml"))
     }
@@ -24,13 +39,16 @@ class GraphMLSpec extends Specification {
         gml.graph.elements.nodes.size() == 6
         Node node = gml.graph.elements.nodes.find{it.data["label"] == label}
         node.data["svg"] == svgPath
+        node.data["width"] == width
+        node.data["height"] == height
+
 
         where:
-        label | svgPath
-        "1" | "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/1.svg"
-        "2" | "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/2.svg"
-        "5" | "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/5.svg"
-        "6" | "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/6.svg"
+        label | svgPath | width | height
+        "1" | "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/1.svg" | 250 | 250
+        "2" | "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/2.svg" | 220 | 200
+        "5" | "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/5.svg" | 250 | 250
+        "6" | "http://localhost:8080/public/8c574d84-0a99-4192-a483-126709392ddc/6.svg" | 280 | 350
     }
 
     def "json serialization works"() {

@@ -9,6 +9,7 @@ import groovy.xml.XmlParser
 import io.omixer.graphmlcyjs.cyjs.Edge
 import io.omixer.graphmlcyjs.cyjs.Elements
 import io.omixer.graphmlcyjs.cyjs.Graph
+import io.omixer.graphmlcyjs.svg.Svg
 
 
 /**
@@ -18,7 +19,7 @@ import io.omixer.graphmlcyjs.cyjs.Graph
 class GraphML {
 
     Node root
-    Map<String, String> svgMapping
+    Map<String, Svg> svgMapping
     Graph graph
     Gson gsonSerializer
 
@@ -52,7 +53,10 @@ class GraphML {
             // set the id to the id of the node in graphml to be able to connect edges
             node.data["id"] = it.@id
             // add a link to the node SVG image
-            node.data["svg"] = svgMapping[node.data["label"]]
+            Svg svg = svgMapping[node.data["label"]]
+            node.data["svg"] = svg.getPath()
+            node.data["width"] = svg.getDimension().getWidth()
+            node.data["height"] = svg.getDimension().getHeight()
             node
         }
 
